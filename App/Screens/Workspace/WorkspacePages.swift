@@ -61,7 +61,18 @@ struct DesktopPage: View {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 205), spacing: 22)], spacing: 24) {
                     ForEach(store.document.activeTiles) { tile in
                         VStack(alignment: .leading, spacing: 12) {
-                            LiveTile(tile: tile, interactive: false).frame(height: 190).allowsHitTesting(false).opacity(tile.enabled ? 1 : 0.5)
+                            Button { store.editInStudio(tile.id) } label: {
+                                ZStack {
+                                    LiveTile(tile: tile, interactive: false)
+                                        .frame(height: 190)
+                                        .allowsHitTesting(false)
+                                        .opacity(tile.enabled ? 1 : 0.5)
+                                    Color.clear
+                                        .contentShape(RoundedRectangle(cornerRadius: 18))
+                                }
+                            }
+                            .buttonStyle(.plain)
+                            .help(L10n.text("Customize"))
                             HStack {
                                 Text(tile.kind.title).font(.system(size: 12, weight: .medium))
                                 Spacer()
