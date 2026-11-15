@@ -100,10 +100,17 @@ struct MainShellView: View {
                         Text(L10n.text(page.rawValue)).font(.system(size: 12, weight: store.page == page ? .semibold : .regular))
                         Spacer(minLength: 0)
                         if page == .desktop { Text("\(store.document.activeTiles.count)").font(.system(size: 10)).foregroundStyle(.secondary) }
-                    }.padding(.horizontal, 12).frame(height: 37)
-                        .foregroundStyle(store.page == page ? Color.primary : Color.secondary)
-                        .background(store.page == page ? BrandTheme.accent.opacity(scheme == .dark ? 0.22 : 0.12) : .clear, in: RoundedRectangle(cornerRadius: 7))
-                }.buttonStyle(.plain).padding(.horizontal, 12).padding(.bottom, 4)
+                    }
+                    .padding(.horizontal, 12)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 37)
+                    .foregroundStyle(store.page == page ? Color.primary : Color.secondary)
+                    .background(store.page == page ? BrandTheme.accent.opacity(scheme == .dark ? 0.22 : 0.12) : Color.clear, in: RoundedRectangle(cornerRadius: 7))
+                    .contentShape(RoundedRectangle(cornerRadius: 7))
+                }
+                .buttonStyle(.plain)
+                .padding(.horizontal, 12)
+                .padding(.bottom, 4)
             }
             Spacer()
             VStack(alignment: .leading, spacing: 8) {
@@ -113,7 +120,13 @@ struct MainShellView: View {
             }.padding(20)
             Divider().padding(.horizontal, 16)
             Button { store.page = .settings } label: {
-                Label(L10n.text("Settings"), systemImage: "gearshape").font(.system(size: 12)).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading).padding(23)
+                Label(L10n.text("Settings"), systemImage: "gearshape")
+                    .font(.system(size: 12))
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 24)
+                    .frame(height: 44)
+                    .contentShape(Rectangle())
             }.buttonStyle(.plain)
         }.background(BrandTheme.sidebar(scheme == .dark))
     }
