@@ -160,6 +160,7 @@ Building and installing the `iGetWidgets` WidgetKit extension requires full Xcod
 | Explore | What you'll find |
 | :--- | :--- |
 | [Development](docs/DEVELOPMENT.md) | Architecture, builds, storage, personalization, and resource policy |
+| [Design system](docs/design/DESIGN_SYSTEM.md) | Matte palettes, sizing scales, typography hierarchy, and accessibility guidelines |
 | [Connected services](docs/INTEGRATIONS.md) | Weather, music permissions, photos, and launchers |
 | [Validation record](docs/VALIDATION.md) | Recorded checks, render coverage, and remaining device checks |
 
