@@ -55,12 +55,18 @@ struct GalleryView: View {
                             ForEach(filtered) { kind in
                                 Button { selected = kind; palette = kind.defaultPalette; size = kind == .game || kind == .canvas ? .large : .small } label: {
                                     VStack(alignment: .leading, spacing: 10) {
-                                        LiveTile(tile: DesktopTile(kind: kind, palette: kind.defaultPalette), interactive: false)
-                                            .frame(height: 177).allowsHitTesting(false)
-                                            .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(selected == kind ? BrandTheme.accent.opacity(0.8) : .clear, lineWidth: 2))
+                                        ZStack {
+                                            LiveTile(tile: DesktopTile(kind: kind, palette: kind.defaultPalette), interactive: false)
+                                                .frame(height: 177)
+                                                .allowsHitTesting(false)
+                                            Color.clear
+                                                .contentShape(RoundedRectangle(cornerRadius: 18))
+                                        }
+                                        .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(selected == kind ? BrandTheme.accent.opacity(0.8) : .clear, lineWidth: 2))
                                         HStack { Text(kind.title).font(.system(size: 12, weight: .medium)); Spacer(); Image(systemName: "plus").font(.system(size: 10)).foregroundStyle(.secondary) }.foregroundStyle(.primary).padding(.horizontal, 3)
                                         Text(L10n.text(kind.category)).font(.system(size: 10)).foregroundStyle(.secondary).padding(.horizontal, 3)
                                     }
+                                    .contentShape(Rectangle())
                                 }.buttonStyle(.plain).accessibilityLabel(L10n.format("Configure %@", kind.title))
                             }
                         }

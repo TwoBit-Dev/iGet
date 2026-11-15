@@ -25,6 +25,8 @@ struct iGetApp: App {
         }
         MenuBarExtra {
             MenuBarView().environmentObject(delegate.store)
-        } label: { BrandMark(size: 18) }.menuBarExtraStyle(.window)
+        } label: {
+            Image(systemName: "square.grid.2x2")
+        }.menuBarExtraStyle(.window)
     }
 }
