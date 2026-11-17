@@ -9,7 +9,7 @@ struct GalleryView: View {
     @State private var selected: ToolKind = .canvas
     @State private var size: TileSize = .large
     @State private var palette = "aurora"
-    @State private var clockStyle = "cat"
+    @State private var clockStyle = "minnie"
     private var filtered: [ToolKind] {
         [.canvas, .photo, .pet, .music, .weather, .sticker, .game, .clock, .quote, .water, .dice, .breathing, .launcher, .focus, .tasks, .notes, .calendar, .countdown, .habits, .battery, .system].filter { (item: ToolKind) in (category == "All" || item.category == category) && (query.isEmpty || (item.title + " " + item.summary + " " + item.rawValue).range(of: query, options: [.caseInsensitive, .diacriticInsensitive], locale: localization.locale) != nil) }
     }
@@ -104,6 +104,7 @@ struct GalleryView: View {
                             VStack(alignment: .leading, spacing: 10) {
                                 Text(L10n.text("Clock style")).font(.system(size: 11, weight: .medium))
                                 Picker(L10n.text("Clock style"), selection: $clockStyle) {
+                                    Text(L10n.text("Minnie Mouse (Apple Watch)")).tag("minnie")
                                     Text(L10n.text("Digital")).tag("digital")
                                     Text(L10n.text("Cat mascot (Mimi)")).tag("cat")
                                     Text(L10n.text("Bunny mascot (Bibi)")).tag("bunny")
