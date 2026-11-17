@@ -12,6 +12,7 @@
 		0393290B3D234D2BCECE209C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 707C083A88AF7662CD434F3B /* InfoPlist.strings */; };
 		09C4863AA0B225F57692C4A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08045E19BB4657F305AF5AB2 /* AppDelegate.swift */; };
 		1429BB033240A5DEBEBC456F /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DB7A0EAE224F4249F188EE /* LocalizationManager.swift */; };
+		1634C74AF14A5F493A8F8B34 /* MascotClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FE059DD4CBDD40CDC87329 /* MascotClockView.swift */; };
 		18DC9B2728F0E03B1DD4954C /* ConnectedServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = C121053F4108DA47187B12D9 /* ConnectedServices.swift */; };
 		220273C95C8B77D1DBD3A004 /* Personalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39C4A304069755C7450288F /* Personalization.swift */; };
 		22B2189EE72C0B6321DCE057 /* ThemeTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6C67DF083F145B6FE7E5BA /* ThemeTokens.swift */; };
@@ -51,6 +52,7 @@
 		DC272517766990E8BAB2B040 /* WorkspaceDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69E9B85686379504B309E6A /* WorkspaceDatabase.swift */; };
 		DE578F33F22344F808F3CFF8 /* MainShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6E64B966CE840DE4B20C82 /* MainShellView.swift */; };
 		E6D8E6EFB39273EA3106B194 /* WorkspaceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC557A4FDF85FF365F27D9E0 /* WorkspaceModels.swift */; };
+		EADD0FBE9FE665C652CC6A8B /* MascotClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FE059DD4CBDD40CDC87329 /* MascotClockView.swift */; };
 		F62F7EA362E998D473C29C55 /* LocalizationCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2036EBE91D899B67711D24D8 /* LocalizationCatalog.swift */; };
 		F7A638F657A3679B4C2288E0 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DB7A0EAE224F4249F188EE /* LocalizationManager.swift */; };
 /* End PBXBuildFile section */
@@ -110,6 +112,7 @@
 		B39C4A304069755C7450288F /* Personalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Personalization.swift; sourceTree = "<group>"; };
 		C0AB49FD52821F7404639EF9 /* WorkspacePages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspacePages.swift; sourceTree = "<group>"; };
 		C121053F4108DA47187B12D9 /* ConnectedServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedServices.swift; sourceTree = "<group>"; };
+		C3FE059DD4CBDD40CDC87329 /* MascotClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MascotClockView.swift; sourceTree = "<group>"; };
 		C7B7E4769E2A64B203E4592A /* WorkspaceWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceWidgets.swift; sourceTree = "<group>"; };
 		CDDBA7B04621773309314AB8 /* PersonalizationStudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalizationStudio.swift; sourceTree = "<group>"; };
 		D17FDC021FE62365580590AF /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -162,6 +165,7 @@
 		11DC06D3790A12CDE066005D /* iGetDesign */ = {
 			isa = PBXGroup;
 			children = (
+				C3FE059DD4CBDD40CDC87329 /* MascotClockView.swift */,
 				5AC087B93E17B7E4DE2EEFED /* PersonalizationDesign.swift */,
 				6C6C67DF083F145B6FE7E5BA /* ThemeTokens.swift */,
 				6AE0037B3D9F9459168EAFCD /* WorkspaceWidgetView.swift */,
@@ -528,6 +532,7 @@
 				F62F7EA362E998D473C29C55 /* LocalizationCatalog.swift in Sources */,
 				F7A638F657A3679B4C2288E0 /* LocalizationManager.swift in Sources */,
 				DE578F33F22344F808F3CFF8 /* MainShellView.swift in Sources */,
+				1634C74AF14A5F493A8F8B34 /* MascotClockView.swift in Sources */,
 				A9A453A82F3029757D02F5F3 /* MenuBarController.swift in Sources */,
 				BE7E5E8B55A0F36BCA3D95AC /* OverlayWindowManager.swift in Sources */,
 				D78E6DDB6F32941982FA4C8A /* PersonalWidgetViews.swift in Sources */,
@@ -556,6 +561,7 @@
 			files = (
 				9C971631F2CB5ADC2378E5F1 /* LocalizationCatalog.swift in Sources */,
 				1429BB033240A5DEBEBC456F /* LocalizationManager.swift in Sources */,
+				EADD0FBE9FE665C652CC6A8B /* MascotClockView.swift in Sources */,
 				C5AC297B44C546D51465E09C /* Personalization.swift in Sources */,
 				806547071D4BBF25F5701715 /* PersonalizationDesign.swift in Sources */,
 				32A9CACF95706AF6DDD5278F /* ThemeTokens.swift in Sources */,

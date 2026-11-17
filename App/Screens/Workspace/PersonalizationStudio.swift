@@ -157,6 +157,17 @@ struct WidgetContentInspector: View {
                 if let text = tile.settings.bodyText { WidgetTextEditor(value: text) { value in store.customize(tile.id) { $0.bodyText = value } } }
                 else { Button(L10n.text("Open shared note")) { store.selectedTool = .notes } }
             case .clock:
+                Picker(L10n.text("Clock style"), selection: Binding(get: {
+                    MascotClockType.from(symbol: tile.settings.symbol)?.rawValue ?? "digital"
+                }, set: { choice in
+                    store.customize(tile.id) { $0.symbol = choice }
+                })) {
+                    Text(L10n.text("Minnie Mouse (Apple Watch)")).tag("minnie")
+                    Text(L10n.text("Digital")).tag("digital")
+                    Text(L10n.text("Cat mascot (Mimi)")).tag("cat")
+                    Text(L10n.text("Bunny mascot (Bibi)")).tag("bunny")
+                    Text(L10n.text("Bear mascot (Kuma)")).tag("bear")
+                }
                 Picker(L10n.text("Time zone"), selection: Binding(get: { tile.settings.timeZone ?? store.document.preferences.clockTimeZone }, set: { zone in store.customize(tile.id) { $0.timeZone = zone } })) { ForEach(TimeZone.knownTimeZoneIdentifiers, id: \.self) { Text($0.replacingOccurrences(of: "_", with: " ")).tag($0) } }
                 Button(L10n.text("Follow shared clock settings")) { store.customize(tile.id) { $0.timeZone = nil } }
             case .countdown:

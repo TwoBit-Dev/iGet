@@ -58,18 +58,33 @@ struct WorkspaceWidgetView: View {
     @ViewBuilder private var content: some View {
         switch kind {
         case .clock:
-            TimelineView(.everyMinute) { context in
-                let clockDate = referenceDate ?? context.date
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(timeString(clockDate))
-                        .font(.system(size: (isLarge ? 60 : 43) * style.fontScale, weight: .medium, design: style.typeface.design)).monospacedDigit()
-                        .minimumScaleFactor(0.45).lineLimit(1)
-                    Spacer(minLength: 0)
-                    if document.preferences.showDate {
-                        Text(dateString(clockDate, format: "EEEE"))
-                            .font(.system(size: (12) * style.fontScale, weight: .medium))
-                        Text(dateString(clockDate, format: "d MMMM"))
-                            .font(.system(size: (11) * style.fontScale)).foregroundStyle(palette.secondaryText)
+            if let mascotType = MascotClockType.from(symbol: style.symbol) {
+                TimelineView(.periodic(from: .now, by: 1.0)) { context in
+                    let clockDate = referenceDate ?? context.date
+                    MascotClockView(
+                        date: clockDate,
+                        mascotType: mascotType,
+                        palette: palette,
+                        isLarge: isLarge,
+                        timeZoneIdentifier: style.timeZone ?? document.preferences.clockTimeZone,
+                        showDigitalTime: true,
+                        interactive: true
+                    )
+                }
+            } else {
+                TimelineView(.everyMinute) { context in
+                    let clockDate = referenceDate ?? context.date
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(timeString(clockDate))
+                            .font(.system(size: (isLarge ? 60 : 43) * style.fontScale, weight: .medium, design: style.typeface.design)).monospacedDigit()
+                            .minimumScaleFactor(0.45).lineLimit(1)
+                        Spacer(minLength: 0)
+                        if document.preferences.showDate {
+                            Text(dateString(clockDate, format: "EEEE"))
+                                .font(.system(size: (12) * style.fontScale, weight: .medium))
+                            Text(dateString(clockDate, format: "d MMMM"))
+                                .font(.system(size: (11) * style.fontScale)).foregroundStyle(palette.secondaryText)
+                        }
                     }
                 }
             }
