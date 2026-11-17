@@ -9,8 +9,18 @@ struct GalleryView: View {
     @State private var selected: ToolKind = .canvas
     @State private var size: TileSize = .large
     @State private var palette = "aurora"
+    @State private var clockStyle = "cat"
     private var filtered: [ToolKind] {
         [.canvas, .photo, .pet, .music, .weather, .sticker, .game, .clock, .quote, .water, .dice, .breathing, .launcher, .focus, .tasks, .notes, .calendar, .countdown, .habits, .battery, .system].filter { (item: ToolKind) in (category == "All" || item.category == category) && (query.isEmpty || (item.title + " " + item.summary + " " + item.rawValue).range(of: query, options: [.caseInsensitive, .diacriticInsensitive], locale: localization.locale) != nil) }
+    }
+    private var previewTile: DesktopTile {
+        var tile = DesktopTile(kind: selected, size: size, palette: palette)
+        if selected == .clock {
+            var opts = tile.settings
+            opts.symbol = clockStyle
+            tile.settings = opts
+        }
+        return tile
     }
     var body: some View {
         HStack(spacing: 0) {
@@ -79,7 +89,6 @@ struct GalleryView: View {
                     VStack(alignment: .leading, spacing: 20) {
                         HStack { Text(L10n.text("WIDGET SETTINGS")).font(.system(size: 9, weight: .semibold)).tracking(1.4).foregroundStyle(BrandTheme.accent); Spacer(); Image(systemName: selected.symbol).foregroundStyle(.secondary) }
                         VStack(alignment: .leading, spacing: 7) { Text(selected.title).font(.system(size: 23, weight: .semibold)); Text(selected.summary).font(.system(size: 12)).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true) }
-                        let previewTile = DesktopTile(kind: selected, size: size, palette: palette)
                         GeometryReader { proxy in
                             let targetW = max(1, previewTile.displayWidth)
                             let targetH = max(1, previewTile.displayHeight)
@@ -91,14 +100,37 @@ struct GalleryView: View {
                         }
                         .frame(height: 196)
                         .allowsHitTesting(false)
+                        if selected == .clock {
+                            VStack(alignment: .leading, spacing: 10) {
+                                Text(L10n.text("Clock style")).font(.system(size: 11, weight: .medium))
+                                Picker(L10n.text("Clock style"), selection: $clockStyle) {
+                                    Text(L10n.text("Digital")).tag("digital")
+                                    Text(L10n.text("Cat mascot (Mimi)")).tag("cat")
+                                    Text(L10n.text("Bunny mascot (Bibi)")).tag("bunny")
+                                    Text(L10n.text("Bear mascot (Kuma)")).tag("bear")
+                                }
+                                .labelsHidden()
+                                .pickerStyle(.menu)
+                            }
+                        }
                         VStack(alignment: .leading, spacing: 10) { Text(L10n.text("Starting size")).font(.system(size: 11, weight: .medium)); Picker(L10n.text("Size"), selection: $size) { ForEach(TileSize.allCases) { Text(L10n.text($0.rawValue.capitalized)).tag($0) } }.labelsHidden().pickerStyle(.segmented) }
                         VStack(alignment: .leading, spacing: 10) { Text(L10n.text("Palette")).font(.system(size: 11, weight: .medium)); PalettePicker(selection: $palette) }
                         Label(L10n.text("Resize freely in Studio"), systemImage: "arrow.up.left.and.arrow.down.right").font(.system(size: 10)).foregroundStyle(.secondary)
                     }.padding(22)
                 }
                 VStack(spacing: 11) {
-                    Button { store.createAndCustomize(selected, size: size, palette: palette) } label: { Label(L10n.text("Configure widget"), systemImage: "slider.horizontal.3").frame(maxWidth: .infinity) }.buttonStyle(.borderedProminent).controlSize(.large)
-                    Button { store.addTile(selected, size: size, palette: palette) } label: { Label(L10n.text("Add to desktop"), systemImage: "plus").frame(maxWidth: .infinity) }.controlSize(.large)
+                    Button {
+                        store.createAndCustomize(selected, size: size, palette: palette)
+                        if selected == .clock, let lastID = store.document.activeTiles.last?.id {
+                            store.customize(lastID) { $0.symbol = clockStyle }
+                        }
+                    } label: { Label(L10n.text("Configure widget"), systemImage: "slider.horizontal.3").frame(maxWidth: .infinity) }.buttonStyle(.borderedProminent).controlSize(.large)
+                    Button {
+                        store.addTile(selected, size: size, palette: palette)
+                        if selected == .clock, let lastID = store.document.activeTiles.last?.id {
+                            store.customize(lastID) { $0.symbol = clockStyle }
+                        }
+                    } label: { Label(L10n.text("Add to desktop"), systemImage: "plus").frame(maxWidth: .infinity) }.controlSize(.large)
                     Text(L10n.text("Add via macOS → Edit Widgets.")).font(.system(size: 10)).foregroundStyle(.tertiary)
                     Text(L10n.format("Current space: %@", store.document.activeSpace?.name ?? "—")).font(.system(size: 10)).foregroundStyle(.secondary)
                 }.padding(22)
