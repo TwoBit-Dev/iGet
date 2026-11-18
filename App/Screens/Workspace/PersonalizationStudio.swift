@@ -162,7 +162,8 @@ struct WidgetContentInspector: View {
                 }, set: { choice in
                     store.customize(tile.id) { $0.symbol = choice }
                 })) {
-                    Text(L10n.text("Minnie Mouse (Apple Watch)")).tag("minnie")
+                    Text(L10n.text("Minnie (Character Arms)")).tag("minnie")
+                    Text(L10n.text("Minnie (Classic Hands)")).tag("minnie-classic")
                     Text(L10n.text("Digital")).tag("digital")
                     Text(L10n.text("Cat mascot (Mimi)")).tag("cat")
                     Text(L10n.text("Bunny mascot (Bibi)")).tag("bunny")
