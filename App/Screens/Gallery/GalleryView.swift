@@ -104,7 +104,8 @@ struct GalleryView: View {
                             VStack(alignment: .leading, spacing: 10) {
                                 Text(L10n.text("Clock style")).font(.system(size: 11, weight: .medium))
                                 Picker(L10n.text("Clock style"), selection: $clockStyle) {
-                                    Text(L10n.text("Minnie (Character Arms)")).tag("minnie")
+                                    Text(L10n.text("Minnie (Apple Watch Illustrated)")).tag("minnie")
+                                    Text(L10n.text("Minnie (Character Arms)")).tag("minnie-arms")
                                     Text(L10n.text("Minnie (Classic Hands)")).tag("minnie-classic")
                                     Text(L10n.text("Digital")).tag("digital")
                                     Text(L10n.text("Cat mascot (Mimi)")).tag("cat")
