@@ -2,7 +2,8 @@ import SwiftUI
 import AVFoundation
 
 public enum MascotClockType: String, CaseIterable, Identifiable {
-    case minnieArms = "minnie"
+    case minnieIllustrated = "minnie"
+    case minnieArms = "minnie-arms"
     case minnieClassic = "minnie-classic"
     case cat = "cat"
     case bunny = "bunny"
@@ -12,6 +13,7 @@ public enum MascotClockType: String, CaseIterable, Identifiable {
 
     public var displayName: String {
         switch self {
+        case .minnieIllustrated: return L10n.text("Minnie (Apple Watch Illustrated)")
         case .minnieArms: return L10n.text("Minnie (Character Arms)")
         case .minnieClassic: return L10n.text("Minnie (Classic Hands)")
         case .cat: return L10n.text("Cat mascot (Mimi)")
@@ -21,12 +23,12 @@ public enum MascotClockType: String, CaseIterable, Identifiable {
     }
 
     public var isMinnie: Bool {
-        self == .minnieArms || self == .minnieClassic
+        self == .minnieIllustrated || self == .minnieArms || self == .minnieClassic
     }
 
     public var emoji: String {
         switch self {
-        case .minnieArms, .minnieClassic: return "🎀"
+        case .minnieIllustrated, .minnieArms, .minnieClassic: return "🎀"
         case .cat: return "🐱"
         case .bunny: return "🐰"
         case .bear: return "🐻"
@@ -35,13 +37,22 @@ public enum MascotClockType: String, CaseIterable, Identifiable {
 
     public static func from(symbol: String) -> MascotClockType? {
         switch symbol.lowercased() {
-        case "minnie", "minnie-arms", "mascot-minnie", "mouse", "apple-watch", "applewatch", "🎀", "🐭": return .minnieArms
-        case "minnie-classic", "minnie-hands", "minnie-dial": return .minnieClassic
-        case "cat", "mascot-cat", "🐈", "🐱": return .cat
-        case "bunny", "mascot-bunny", "🐰": return .bunny
-        case "bear", "mascot-bear", "🐻": return .bear
-        case "mascot": return .minnieArms
-        default: return nil
+        case "minnie", "minnie-illustrated", "minnie-apple", "apple-watch", "applewatch", "🎀", "🐭":
+            return .minnieIllustrated
+        case "minnie-arms", "mascot-minnie", "mouse":
+            return .minnieArms
+        case "minnie-classic", "minnie-hands", "minnie-dial":
+            return .minnieClassic
+        case "cat", "mascot-cat", "🐈", "🐱":
+            return .cat
+        case "bunny", "mascot-bunny", "🐰":
+            return .bunny
+        case "bear", "mascot-bear", "🐻":
+            return .bear
+        case "mascot":
+            return .minnieIllustrated
+        default:
+            return nil
         }
     }
 }
@@ -74,7 +85,7 @@ public struct MascotClockView: View {
 
     public init(
         date: Date,
-        mascotType: MascotClockType = .minnieArms,
+        mascotType: MascotClockType = .minnieIllustrated,
         palette: ThemePalette,
         isLarge: Bool = false,
         timeZoneIdentifier: String? = nil,
@@ -142,22 +153,29 @@ public struct MascotClockView: View {
             }
 
             // 4. Center Mascot Body & Head
-            mascotFigure(size: size)
-                .scaleEffect(isCheering ? 1.12 : 1.0)
-                .offset(y: isCheering ? -5 : 0)
-
-            // 5. Clock Hands / Arms
-            if mascotType == .minnieArms {
-                // Natural Character Arms from Shoulders!
-                minnieAnatomicalArms(size: size)
+            if mascotType == .minnieIllustrated {
+                // Authentic Illustrated Disney Apple Watch Minnie with Articulated Arms!
+                minnieIllustratedView(size: size)
+                    .scaleEffect(isCheering ? 1.12 : 1.0)
+                    .offset(y: isCheering ? -5 : 0)
             } else {
-                // Classic Center-Pivot Clock Hands
-                mascotArms(size: size)
-            }
+                mascotFigure(size: size)
+                    .scaleEffect(isCheering ? 1.12 : 1.0)
+                    .offset(y: isCheering ? -5 : 0)
 
-            // 6. Center Pin (only for center-pivot styles, omitted for natural arms!)
-            if mascotType != .minnieArms {
-                centerPin(size: size)
+                // 5. Clock Hands / Arms
+                if mascotType == .minnieArms {
+                    // Natural Character Arms from Shoulders (Corrected Height!)
+                    minnieAnatomicalArms(size: size)
+                } else {
+                    // Classic Center-Pivot Clock Hands
+                    mascotArms(size: size)
+                }
+
+                // 6. Center Pin (only for center-pivot styles)
+                if mascotType != .minnieArms {
+                    centerPin(size: size)
+                }
             }
 
             // 7. Optional Digital Time Readout Pill
@@ -187,6 +205,63 @@ public struct MascotClockView: View {
         .frame(width: size, height: size)
     }
 
+    // MARK: - Authentic Illustrated Apple Watch Minnie View
+
+    private func minnieIllustratedView(size: CGFloat) -> some View {
+        let hour = Double(calendar.component(.hour, from: date) % 12)
+        let minute = Double(calendar.component(.minute, from: date))
+        let second = Double(calendar.component(.second, from: date))
+
+        let sec = calendar.component(.second, from: date)
+        let isTapping = !reduceMotion && (sec % 2 == 0)
+
+        let bodyW = size * 0.44
+        let bodyH = size * 0.70
+
+        // Arm target angles
+        let hourAngleDeg = (hour + minute / 60.0) * 30.0
+        let minuteAngleDeg = (minute + second / 60.0) * 6.0
+
+        // Shoulder anchor offsets relative to dial center
+        let shoulderLeft = CGPoint(x: -bodyW * 0.16, y: -bodyH * 0.05)
+        let shoulderRight = CGPoint(x: bodyW * 0.28, y: -bodyH * 0.05)
+
+        let armHourLen = size * 0.26
+        let armMinLen = size * 0.36
+
+        return ZStack {
+            // 1. Minnie Illustrated Body (head, ears, hat, daisy, dress, yellow shoes)
+            if let bodyImg = MinnieArtworkAssets.bodyImage {
+                Image(nsImage: bodyImg)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: bodyW, height: bodyH)
+                    .offset(y: isTapping ? -1.5 : 0)
+            }
+
+            // 2. Illustrated Left Arm (Hour Arm from Left Shoulder)
+            if let hourImg = MinnieArtworkAssets.hourArmImage {
+                Image(nsImage: hourImg)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: armHourLen)
+                    .rotationEffect(.degrees(hourAngleDeg), anchor: .bottom)
+                    .offset(x: shoulderLeft.x, y: shoulderLeft.y - armHourLen / 2)
+            }
+
+            // 3. Illustrated Right Arm (Minute Arm from Right Shoulder with Pointing Finger)
+            if let minImg = MinnieArtworkAssets.minuteArmImage {
+                Image(nsImage: minImg)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: armMinLen)
+                    .rotationEffect(.degrees(minuteAngleDeg), anchor: .bottom)
+                    .offset(x: shoulderRight.x, y: shoulderRight.y - armMinLen / 2)
+            }
+        }
+        .frame(width: size, height: size)
+    }
+
     // MARK: - Apple Watch Case
 
     private func appleWatchCase<Content: View>(width: CGFloat, height: CGFloat, @ViewBuilder content: @escaping (CGFloat) -> Content) -> some View {
@@ -199,11 +274,9 @@ public struct MascotClockView: View {
         let dialContentSize = min(screenW, screenH)
 
         return ZStack {
-            // Digital Crown & Side Button on the right
             HStack(spacing: 0) {
                 Spacer()
                 VStack(spacing: caseH * 0.07) {
-                    // Digital Crown with ridges
                     RoundedRectangle(cornerRadius: 3)
                         .fill(
                             LinearGradient(
@@ -223,7 +296,6 @@ public struct MascotClockView: View {
                         .shadow(color: Color.black.opacity(0.25), radius: 2, x: 1, y: 1)
                         .offset(y: -caseH * 0.11)
 
-                    // Side Button
                     RoundedRectangle(cornerRadius: 2)
                         .fill(
                             LinearGradient(
@@ -239,7 +311,6 @@ public struct MascotClockView: View {
             }
             .frame(width: caseW, height: caseH)
 
-            // Silver Aluminum Watch Body
             RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
                 .fill(
                     LinearGradient(
@@ -267,7 +338,6 @@ public struct MascotClockView: View {
                 .shadow(color: Color.black.opacity(0.3), radius: 8, x: 0, y: 4)
                 .frame(width: caseW, height: caseH)
 
-            // OLED Screen Frame
             RoundedRectangle(cornerRadius: screenRadius, style: .continuous)
                 .fill(Color.black)
                 .frame(width: screenW, height: screenH)
@@ -415,29 +485,25 @@ public struct MascotClockView: View {
         }
     }
 
-    // MARK: - Mascot Figure
+    // MARK: - Vector Mascot Figure
 
     @ViewBuilder
     private func mascotFigure(size: CGFloat) -> some View {
         if mascotType.isMinnie {
-            minnieFigure(size: size)
+            minnieVectorFigure(size: size)
         } else {
             classicMascotFigure(size: size)
         }
     }
 
-    // MARK: - Authentic Minnie Mouse Figure
-
-    private func minnieFigure(size: CGFloat) -> some View {
+    private func minnieVectorFigure(size: CGFloat) -> some View {
         let sec = Double(calendar.component(.second, from: date))
         let isTapping = !reduceMotion && (Int(sec) % 2 == 0)
 
         return ZStack {
-            // 1. Daisy Flower reaching up to 12
             minnieDaisyFlower(size: size)
                 .offset(x: size * 0.06, y: -size * 0.23)
 
-            // 2. Ears
             ZStack {
                 Circle()
                     .fill(Color.black)
@@ -450,20 +516,15 @@ public struct MascotClockView: View {
                     .offset(x: size * 0.10, y: -size * 0.17)
             }
 
-            // 3. Red Pillbox Hat
             ZStack {
                 Ellipse()
                     .fill(Color(hex: "#E52535"))
                     .frame(width: size * 0.13, height: size * 0.08)
-                    .overlay(
-                        Ellipse()
-                            .strokeBorder(Color.black.opacity(0.3), lineWidth: 1)
-                    )
+                    .overlay(Ellipse().strokeBorder(Color.black.opacity(0.3), lineWidth: 1))
                     .rotationEffect(.degrees(10))
             }
             .offset(x: size * 0.025, y: -size * 0.155)
 
-            // 4. Head & Face
             ZStack {
                 Circle()
                     .fill(Color.black)
@@ -498,7 +559,6 @@ public struct MascotClockView: View {
                 }
             }
 
-            // 5. Torso & Red Polka-Dot Skirt
             ZStack {
                 Capsule()
                     .fill(Color.black)
@@ -509,29 +569,22 @@ public struct MascotClockView: View {
                     .offset(y: size * 0.12)
             }
 
-            // 6. Black Legs & Yellow Cartoon Shoes
             HStack(spacing: size * 0.07) {
                 VStack(spacing: 0) {
-                    Capsule()
-                        .fill(Color.black)
-                        .frame(width: 4, height: size * 0.07)
+                    Capsule().fill(Color.black).frame(width: 4, height: size * 0.07)
                     minnieYellowShoe(size: size, isLeft: true)
                 }
                 .offset(y: isTapping ? -4 : 0)
                 .rotationEffect(.degrees(isTapping ? -12 : 0), anchor: .top)
 
                 VStack(spacing: 0) {
-                    Capsule()
-                        .fill(Color.black)
-                        .frame(width: 4, height: size * 0.07)
+                    Capsule().fill(Color.black).frame(width: 4, height: size * 0.07)
                     minnieYellowShoe(size: size, isLeft: false)
                 }
             }
             .offset(y: size * 0.20)
         }
     }
-
-    // MARK: - Minnie Details (Flower, Eyes, Smile, Skirt, Shoes)
 
     private func minnieDaisyFlower(size: CGFloat) -> some View {
         ZStack {
@@ -664,7 +717,7 @@ public struct MascotClockView: View {
         .rotationEffect(.degrees(isLeft ? -8 : 8))
     }
 
-    // MARK: - Minnie Anatomical Character Arms (Originating from Shoulders!)
+    // MARK: - Minnie Anatomical Character Arms (Corrected Lower Shoulder Joint!)
 
     private func minnieAnatomicalArms(size: CGFloat) -> some View {
         let hour = Double(calendar.component(.hour, from: date) % 12)
@@ -683,24 +736,21 @@ public struct MascotClockView: View {
         let minRad = minuteAngleDeg * .pi / 180.0
         let tMinute = CGPoint(x: rMinute * sin(minRad), y: -rMinute * cos(minRad))
 
-        // Left and Right Shoulders
-        let sLeft = CGPoint(x: -size * 0.055, y: -size * 0.015)
-        let sRight = CGPoint(x: size * 0.055, y: -size * 0.015)
+        // Lower shoulders to anatomical torso position at top of dress (below chin!)
+        let sLeft = CGPoint(x: -size * 0.065, y: size * 0.050)
+        let sRight = CGPoint(x: size * 0.065, y: size * 0.050)
 
-        // Hour Arm vector from Left Shoulder
         let dxH = tHour.x - sLeft.x
         let dyH = tHour.y - sLeft.y
         let lenH = hypot(dxH, dyH)
         let angleH = atan2(dxH, -dyH) * 180.0 / .pi
 
-        // Minute Arm vector from Right Shoulder
         let dxM = tMinute.x - sRight.x
         let dyM = tMinute.y - sRight.y
         let lenM = hypot(dxM, dyM)
         let angleM = atan2(dxM, -dyM) * 180.0 / .pi
 
         return ZStack {
-            // LEFT ARM (Hour Arm from Left Shoulder)
             anatomicalArm(
                 shoulder: sLeft,
                 length: lenH,
@@ -710,7 +760,6 @@ public struct MascotClockView: View {
                 size: size
             )
 
-            // RIGHT ARM (Minute Arm from Right Shoulder)
             anatomicalArm(
                 shoulder: sRight,
                 length: lenM,
@@ -731,15 +780,12 @@ public struct MascotClockView: View {
         size: CGFloat
     ) -> some View {
         ZStack {
-            // Shoulder ball joint (connects smoothly into Minnie's black torso)
             Circle()
                 .fill(Color.black)
                 .frame(width: size * 0.045, height: size * 0.045)
                 .offset(x: shoulder.x, y: shoulder.y)
 
-            // Rotatable Cartoon Arm from Shoulder to Hand
             VStack(spacing: 0) {
-                // White Cartoon Glove at the tip
                 ZStack {
                     Circle()
                         .fill(Color.white)
@@ -789,7 +835,6 @@ public struct MascotClockView: View {
                 }
                 .shadow(color: Color.black.opacity(0.35), radius: 3, y: 1.5)
 
-                // Black Arm Sleeve (connecting hand to shoulder)
                 RoundedRectangle(cornerRadius: size * 0.016)
                     .fill(Color.black)
                     .overlay(
@@ -884,7 +929,7 @@ public struct MascotClockView: View {
     @ViewBuilder
     private func mascotEars(size: CGFloat) -> some View {
         switch mascotType {
-        case .minnieArms, .minnieClassic:
+        case .minnieIllustrated, .minnieArms, .minnieClassic:
             EmptyView()
         case .cat:
             HStack(spacing: size * 0.14) {
@@ -940,7 +985,7 @@ public struct MascotClockView: View {
     @ViewBuilder
     private func mascotMouth(size: CGFloat) -> some View {
         switch mascotType {
-        case .minnieArms, .minnieClassic:
+        case .minnieIllustrated, .minnieArms, .minnieClassic:
             EmptyView()
         case .cat:
             VStack(spacing: 1) {
@@ -970,7 +1015,7 @@ public struct MascotClockView: View {
 
     private var mascotBaseColor: Color {
         switch mascotType {
-        case .minnieArms, .minnieClassic: return Color.black
+        case .minnieIllustrated, .minnieArms, .minnieClassic: return Color.black
         case .cat: return Color(hex: "#FFFDF9")
         case .bunny: return Color(hex: "#FFFFFF")
         case .bear: return Color(hex: "#E8D8C8")

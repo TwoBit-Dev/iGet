@@ -191,6 +191,7 @@ enum LocalizationCatalog {
         "Open shared note": (tr: "Ortak notu aç", de: "Gemeinsame Notiz öffnen"),
         "Clock style": (tr: "Saat stili", de: "Uhrstil"),
         "Digital": (tr: "Dijital", de: "Digital"),
+        "Minnie (Apple Watch Illustrated)": (tr: "Minnie (Apple Watch Orijinal)", de: "Minnie (Apple Watch Original)"),
         "Minnie (Character Arms)": (tr: "Minnie (Karakter Kolları)", de: "Minnie (Charakter-Arme)"),
         "Minnie (Classic Hands)": (tr: "Minnie (Akrep & Yelkovan)", de: "Minnie (Klassische Zeiger)"),
         "Minnie Mouse": (tr: "Minnie Mouse", de: "Minnie Maus"),

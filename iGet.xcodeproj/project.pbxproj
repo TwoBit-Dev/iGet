@@ -30,6 +30,7 @@
 		806547071D4BBF25F5701715 /* PersonalizationDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC087B93E17B7E4DE2EEFED /* PersonalizationDesign.swift */; };
 		8354AB238208EECFC8B6CF6A /* WorkspacePersonalizationActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB294F0C5F78308B73B75C7 /* WorkspacePersonalizationActions.swift */; };
 		850D59CF5A31164F3E37E55B /* GalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749C3207CFFA6B4D902A0EA5 /* GalleryView.swift */; };
+		870720E2D003C02595B81CB7 /* MinnieArtworkAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB5CBA8CFEC45ADC2EBA3F2 /* MinnieArtworkAssets.swift */; };
 		890BF259A27ABFA7138586C9 /* BrandDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEF7761B04CF4078DC06A4B /* BrandDesign.swift */; };
 		8AE1498D2A91C30D88A29B8D /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F1B9EB8C34DACE91DF7E1D4 /* IOKit.framework */; };
 		8B4DB3044BA9D4D5E5D7FFE6 /* WorkspaceWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B7E4769E2A64B203E4592A /* WorkspaceWidgets.swift */; };
@@ -49,6 +50,7 @@
 		C72603A3DA3EF91C2A98D0A8 /* iGetWidgetsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250DA3C956A0E7E293BD9E08 /* iGetWidgetsBundle.swift */; };
 		D19876BD97C314FDA0D8F7D0 /* WorkspaceComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771DCB9A3F79E5EFD4C1C185 /* WorkspaceComponents.swift */; };
 		D78E6DDB6F32941982FA4C8A /* PersonalWidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D303DCF2710904AD8D023015 /* PersonalWidgetViews.swift */; };
+		D80E263D01D6C5141F139D6D /* MinnieArtworkAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB5CBA8CFEC45ADC2EBA3F2 /* MinnieArtworkAssets.swift */; };
 		DC272517766990E8BAB2B040 /* WorkspaceDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69E9B85686379504B309E6A /* WorkspaceDatabase.swift */; };
 		DE578F33F22344F808F3CFF8 /* MainShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6E64B966CE840DE4B20C82 /* MainShellView.swift */; };
 		E6D8E6EFB39273EA3106B194 /* WorkspaceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC557A4FDF85FF365F27D9E0 /* WorkspaceModels.swift */; };
@@ -86,6 +88,7 @@
 		08045E19BB4657F305AF5AB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		12DB7A0EAE224F4249F188EE /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		1CD5BB5B45A03D3F3CE6F462 /* SpacesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacesView.swift; sourceTree = "<group>"; };
+		1FB5CBA8CFEC45ADC2EBA3F2 /* MinnieArtworkAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinnieArtworkAssets.swift; sourceTree = "<group>"; };
 		2036EBE91D899B67711D24D8 /* LocalizationCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationCatalog.swift; sourceTree = "<group>"; };
 		22CEC35140F33E4901BDCF27 /* SystemMonitorWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMonitorWidget.swift; sourceTree = "<group>"; };
 		250DA3C956A0E7E293BD9E08 /* iGetWidgetsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iGetWidgetsBundle.swift; sourceTree = "<group>"; };
@@ -166,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				C3FE059DD4CBDD40CDC87329 /* MascotClockView.swift */,
+				1FB5CBA8CFEC45ADC2EBA3F2 /* MinnieArtworkAssets.swift */,
 				5AC087B93E17B7E4DE2EEFED /* PersonalizationDesign.swift */,
 				6C6C67DF083F145B6FE7E5BA /* ThemeTokens.swift */,
 				6AE0037B3D9F9459168EAFCD /* WorkspaceWidgetView.swift */,
@@ -534,6 +538,7 @@
 				DE578F33F22344F808F3CFF8 /* MainShellView.swift in Sources */,
 				1634C74AF14A5F493A8F8B34 /* MascotClockView.swift in Sources */,
 				A9A453A82F3029757D02F5F3 /* MenuBarController.swift in Sources */,
+				D80E263D01D6C5141F139D6D /* MinnieArtworkAssets.swift in Sources */,
 				BE7E5E8B55A0F36BCA3D95AC /* OverlayWindowManager.swift in Sources */,
 				D78E6DDB6F32941982FA4C8A /* PersonalWidgetViews.swift in Sources */,
 				220273C95C8B77D1DBD3A004 /* Personalization.swift in Sources */,
@@ -562,6 +567,7 @@
 				9C971631F2CB5ADC2378E5F1 /* LocalizationCatalog.swift in Sources */,
 				1429BB033240A5DEBEBC456F /* LocalizationManager.swift in Sources */,
 				EADD0FBE9FE665C652CC6A8B /* MascotClockView.swift in Sources */,
+				870720E2D003C02595B81CB7 /* MinnieArtworkAssets.swift in Sources */,
 				C5AC297B44C546D51465E09C /* Personalization.swift in Sources */,
 				806547071D4BBF25F5701715 /* PersonalizationDesign.swift in Sources */,
 				32A9CACF95706AF6DDD5278F /* ThemeTokens.swift in Sources */,
